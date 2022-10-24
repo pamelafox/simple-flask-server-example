@@ -2,7 +2,6 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/python-3
 {
 	"name": "Python 3",
-	"forwardPorts": [8000],
 	"build": {
 		"dockerfile": "Dockerfile",
 		"context": "..",
@@ -35,9 +34,9 @@
 				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
 				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
 				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
-                "python.testing.unittestEnabled": false,
-                "python.testing.pytestEnabled": true,
-                "workbench.startupEditor": "newUntitledFile"
+				"python.testing.unittestEnabled": false,
+				"python.testing.pytestEnabled": true,
+				"workbench.startupEditor": "newUntitledFile"
 			},
 			
 			// Add the IDs of extensions you want installed when the container is created.
@@ -49,7 +48,7 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [8000, 8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "pip install -r requirements.txt",
