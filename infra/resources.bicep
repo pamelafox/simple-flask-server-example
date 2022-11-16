@@ -1,8 +1,6 @@
 param name string
 param location string
 param resourceToken string
-@secure()
-param databasePassword string
 param tags object
 
 var prefix = '${name}-${resourceToken}'
