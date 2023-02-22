@@ -8,7 +8,7 @@ To try it out:
 2. Run the server:
 
 ```console
-python app.py
+python3 -m flask --debug run
 ```
 
 2. Click 'http://127.0.0.1:8080' in the terminal, which should open the website in a new tab
