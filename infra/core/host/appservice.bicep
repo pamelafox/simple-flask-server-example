@@ -33,6 +33,7 @@ param numberOfWorkers int = -1
 param scmDoBuildDuringDeployment bool = false
 param use32BitWorkerProcess bool = false
 param ftpsState string = 'FtpsOnly'
+param healthCheckPath string = ''
 
 resource appService 'Microsoft.Web/sites@2022-03-01' = {
   name: name
@@ -45,11 +46,13 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
       linuxFxVersion: linuxFxVersion
       alwaysOn: alwaysOn
       ftpsState: ftpsState
+      minTlsVersion: '1.2'
       appCommandLine: appCommandLine
       numberOfWorkers: numberOfWorkers != -1 ? numberOfWorkers : null
       minimumElasticInstanceCount: minimumElasticInstanceCount != -1 ? minimumElasticInstanceCount : null
       use32BitWorkerProcess: use32BitWorkerProcess
       functionAppScaleLimit: functionAppScaleLimit != -1 ? functionAppScaleLimit : null
+      healthCheckPath: healthCheckPath
       cors: {
         allowedOrigins: union([ 'https://portal.azure.com', 'https://ms.portal.azure.com' ], allowedOrigins)
       }
