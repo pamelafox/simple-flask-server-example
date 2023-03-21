@@ -6,7 +6,6 @@ param tags object = {}
 param applicationInsightsName string = ''
 param appServicePlanId string
 param keyVaultName string = ''
-param managedIdentity bool = !empty(keyVaultName)
 
 // Runtime Properties
 @allowed([
@@ -61,7 +60,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
     httpsOnly: true
   }
 
-  identity: { type: managedIdentity ? 'SystemAssigned' : 'None' }
+  identity: { type: 'SystemAssigned' }
 
   resource configAppSettings 'config' = {
     name: 'appsettings'
