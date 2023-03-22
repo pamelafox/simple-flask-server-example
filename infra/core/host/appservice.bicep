@@ -8,9 +8,6 @@ param appServicePlanId string
 param keyVaultName string = ''
 
 // Runtime Properties
-@allowed([
-  'dotnet', 'dotnetcore', 'dotnet-isolated', 'node', 'python', 'java', 'powershell', 'custom'
-])
 param runtimeName string
 param runtimeNameAndVersion string = '${runtimeName}|${runtimeVersion}'
 param runtimeVersion string
