@@ -13,7 +13,7 @@ param storageAccountName string
 @allowed([
   'dotnet', 'dotnetcore', 'dotnet-isolated', 'node', 'python', 'java', 'powershell', 'custom'
 ])
-param runtimeName string
+param runtimeName string = 'custom'
 param runtimeNameAndVersion string = '${runtimeName}|${runtimeVersion}'
 param runtimeVersion string
 
