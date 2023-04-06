@@ -32,6 +32,8 @@ module web 'core/host/appservice.bicep' = {
     runtimeVersion: '3.10'
     scmDoBuildDuringDeployment: true
     ftpsState: 'Disabled'
+    use32BitWorkerProcess: true
+    alwaysOn: false
   }
 }
 
