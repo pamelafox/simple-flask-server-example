@@ -51,15 +51,5 @@ module appServicePlan 'core/host/appserviceplan.bicep' = {
   }
 }
 
-module logAnalyticsWorkspace 'core/monitor/loganalytics.bicep' = {
-  name: 'loganalytics'
-  scope: resourceGroup
-  params: {
-    name: '${prefix}-loganalytics'
-    location: location
-    tags: tags
-  }
-}
-
 output WEB_URI string = 'https://${web.outputs.uri}'
 output AZURE_LOCATION string = location
