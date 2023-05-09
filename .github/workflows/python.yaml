@@ -27,4 +27,5 @@ jobs:
             python3 -m pip install --upgrade pip
             python3 -m pip install -r requirements.txt
         - name: Run server
-          run: timeout 15 python3 -m flask run --port 50505  || exit $(( $? == 124 ? 0 : $? ))
+          run: |
+            timeout 15 python3 -m flask run --port 50505  || exit $(( $? == 124 ? 0 : $? ))
