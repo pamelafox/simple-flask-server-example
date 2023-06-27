@@ -7,6 +7,9 @@
       },
       "location": {
         "value": "${AZURE_LOCATION}"
+      },
+      "useFreeSku": {
+        "value": "${USE_FREE_SKU=false}"
       }
     }
   }

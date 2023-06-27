@@ -53,6 +53,17 @@ Steps for deployment:
 
 ### Costs
 
-The app is currently configured to use the Free tier of Azure App Service, so it should incur no costs.
-See [App Service Pricing](https://azure.microsoft.com/pricing/details/app-service/linux/) for more details on the tier pricing levels
-and the limitations of the free tier.
+Pricing varies per region and usage, so it isn't possible to predict exact costs for your usage.
+
+You can try the [Azure pricing calculator](https://azure.microsoft.com/en-us/pricing/calculator/) for the resources:
+
+- Azure App Service: Basic Tier with 1 CPU core, 1.75 GB RAM. [Pricing](https://azure.microsoft.com/pricing/details/app-service/linux/)
+
+⚠️ To reduce unnecessary costs, remember to take down your app if it's no longer in use,
+either by deleting the resource group in the Portal or running `azd down`.
+
+If you would like to avoid any potential costs, you can configure this app to deploy to the Free Tier of App Service by running this command before provisioning any resources:
+
+```shell
+azd env set USE_FREE_SKU true
+```

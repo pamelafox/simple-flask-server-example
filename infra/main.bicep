@@ -9,6 +9,9 @@ param name string
 @description('Primary location for all resources')
 param location string
 
+@description('Flag to use free sku for App Service (limited availability)')
+param useFreeSku bool = false
+
 var resourceToken = toLower(uniqueString(subscription().id, name, location))
 var tags = { 'azd-env-name': name }
 
@@ -32,8 +35,8 @@ module web 'core/host/appservice.bicep' = {
     runtimeVersion: '3.10'
     scmDoBuildDuringDeployment: true
     ftpsState: 'Disabled'
-    use32BitWorkerProcess: true
-    alwaysOn: false
+    use32BitWorkerProcess: useFreeSku
+    alwaysOn: !useFreeSku
   }
 }
 
@@ -45,7 +48,7 @@ module appServicePlan 'core/host/appserviceplan.bicep' = {
     location: location
     tags: tags
     sku: {
-      name: 'F1'
+      name: useFreeSku ? 'F1' : 'B1'
     }
     reserved: true
   }
