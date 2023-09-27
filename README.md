@@ -35,6 +35,18 @@ Steps for deployment:
 
 1. Sign up for a [free Azure account](https://azure.microsoft.com/free/)
 2. Install the [Azure Dev CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd). (If you opened this repository in a devcontainer, that part will be done for you.)
+3. Login to your Azure account:
+
+    ```shell
+    azd auth login
+    ```
+
+4. _(Optional)_ If you'd like to use the free SKU instead of the basic SKU, run:
+    
+    ```shell
+    azd env set USE_FREE_SKU true
+    ```
+
 3. Provision and deploy all the resources:
 
     ```shell
