@@ -7,17 +7,17 @@ app = Flask(
   static_folder='static'
 )
 
-@app.route('/')
+@app.get('/')
 def index():
   return render_template('index.html')
 
-@app.route('/hello')
+@app.get('/hello')
 def hello():
   return render_template('hello.html', name=request.args.get('name'))
 
 @app.errorhandler(404)
 def handle_404(e):
-    return '<h1>404</h1><p>File not found!</p><img src="https://httpcats.com/404.jpg" alt="cat in box">', 404
+    return '<h1>404</h1><p>File not found!</p><img src="https://httpcats.com/404.jpg" alt="cat in box" width=400>', 404
 
 
 if __name__ == '__main__':
