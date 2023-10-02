@@ -62,7 +62,6 @@ module functions 'appservice.bicep' = {
     keyVaultName: keyVaultName
     kind: kind
     linuxFxVersion: linuxFxVersion
-    managedIdentity: managedIdentity
     minimumElasticInstanceCount: minimumElasticInstanceCount
     numberOfWorkers: numberOfWorkers
     runtimeName: runtimeName
