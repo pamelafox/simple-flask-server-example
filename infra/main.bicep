@@ -26,8 +26,6 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 var prefix = '${name}-${resourceToken}'
 
-
-
 module web 'core/host/appservice.bicep' = {
   name: 'appservice'
   scope: resourceGroup
@@ -80,7 +78,6 @@ module appupdate 'appupdate.bicep' = {
     authIssuerUri: '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0'
   }
 }
-
 
 output WEB_URI string = web.outputs.uri
 output AZURE_LOCATION string = location

@@ -74,10 +74,8 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
         }
       }
     ]
-
   }
 }
-
 
 resource createAddCertificate 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'createAddCertificate2' // TODO: replace with a unique value
@@ -167,11 +165,11 @@ resource clientApp 'Microsoft.Graph/applications@beta' = {
   displayName: 'ChatGPT Sample Client App TODO-1234456' // TODO: replace with a unique value
   signInAudience: 'AzureADMyOrg'
   web: {
-      redirectUris: [
-        'http://localhost:50505/.auth/login/aad/callback'
-        '${appEndpoint}/.auth/login/aad/callback'
-      ]
-      implicitGrantSettings: {enableIdTokenIssuance: true}
+    redirectUris: [
+      'http://localhost:50505/.auth/login/aad/callback'
+      '${appEndpoint}/.auth/login/aad/callback'
+    ]
+    implicitGrantSettings: { enableIdTokenIssuance: true }
   }
   spa: {
     redirectUris: [
@@ -184,13 +182,13 @@ resource clientApp 'Microsoft.Graph/applications@beta' = {
       resourceAppId: '00000003-0000-0000-c000-000000000000'
       resourceAccess: [
         // Graph User.Read
-        {id: 'e1fe6dd8-ba31-4d61-89e7-88639da4683d', type: 'Scope'}
+        { id: 'e1fe6dd8-ba31-4d61-89e7-88639da4683d', type: 'Scope' }
         // offline_access
-        {id: '7427e0e9-2fba-42fe-b0c0-848c9e6a8182', type: 'Scope'}
+        { id: '7427e0e9-2fba-42fe-b0c0-848c9e6a8182', type: 'Scope' }
         // openid
-        {id: '37f7f235-527c-4136-accd-4a02d197296e', type: 'Scope'}
+        { id: '37f7f235-527c-4136-accd-4a02d197296e', type: 'Scope' }
         // profile
-        {id: '14dad69e-099b-42c9-810b-d002981feec1', type: 'Scope'}
+        { id: '14dad69e-099b-42c9-810b-d002981feec1', type: 'Scope' }
       ]
     }
   ]
