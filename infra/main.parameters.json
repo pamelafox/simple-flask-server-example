@@ -8,6 +8,9 @@
       "location": {
         "value": "${AZURE_LOCATION}"
       },
+      "principalId": {
+        "value": "${AZURE_PRINCIPAL_ID}"
+      },
       "useFreeSku": {
         "value": "${USE_FREE_SKU=false}"
       }

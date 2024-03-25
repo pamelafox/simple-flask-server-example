@@ -9,6 +9,9 @@ param name string
 @description('Primary location for all resources')
 param location string
 
+@description('Id of the user or app to assign application roles')
+param principalId string = ''
+
 @description('Flag to use free sku for App Service (limited availability)')
 param useFreeSku bool = false
 
@@ -22,6 +25,8 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 }
 
 var prefix = '${name}-${resourceToken}'
+
+
 
 module web 'core/host/appservice.bicep' = {
   name: 'appservice'
@@ -54,5 +59,28 @@ module appServicePlan 'core/host/appserviceplan.bicep' = {
   }
 }
 
-output WEB_URI string = 'https://${web.outputs.uri}'
+module registration 'appregistration.bicep' = {
+  name: 'reg'
+  scope: resourceGroup
+  params: {
+    keyVaultName: '${take(prefix, 21)}-kv'
+    location: location
+    tags: tags
+    principalId: principalId
+    appEndpoint: web.outputs.uri
+  }
+}
+module appupdate 'appupdate.bicep' = {
+  name: 'appupdate'
+  scope: resourceGroup
+  params: {
+    appServiceName: web.outputs.name
+    authClientId: registration.outputs.clientAppId
+    authCertThumbprint: registration.outputs.certThumbprint
+    authIssuerUri: '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0'
+  }
+}
+
+
+output WEB_URI string = web.outputs.uri
 output AZURE_LOCATION string = location
