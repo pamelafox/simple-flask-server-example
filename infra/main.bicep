@@ -9,11 +9,11 @@ param name string
 @description('Primary location for all resources')
 param location string
 
-@description('Id of the user or app to assign application roles')
-param principalId string = ''
-
 @description('Flag to use free sku for App Service (limited availability)')
 param useFreeSku bool = false
+
+@description('Service Management Reference for the app registration')
+param serviceManagementReference string = ''
 
 var resourceToken = toLower(uniqueString(subscription().id, name, location))
 var tags = { 'azd-env-name': name }
@@ -26,22 +26,18 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 var prefix = '${name}-${resourceToken}'
 
-module web 'core/host/appservice.bicep' = {
-  name: 'appservice'
+module web 'web.bicep' = {
+  name: 'web'
   scope: resourceGroup
   params: {
-    name: '${prefix}-appservice'
+    name: replace('${take(prefix,19)}-web', '--', '-')
     location: location
-    tags: union(tags, { 'azd-service-name': 'web' })
+    tags: tags
     appServicePlanId: appServicePlan.outputs.id
-    runtimeName: 'python'
-    runtimeVersion: '3.10'
-    scmDoBuildDuringDeployment: true
-    ftpsState: 'Disabled'
-    use32BitWorkerProcess: useFreeSku
-    alwaysOn: !useFreeSku
+    useFreeSku: useFreeSku
   }
 }
+
 
 module appServicePlan 'core/host/appserviceplan.bicep' = {
   name: 'serviceplan'
@@ -57,25 +53,28 @@ module appServicePlan 'core/host/appserviceplan.bicep' = {
   }
 }
 
+
+var issuer = '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0'
 module registration 'appregistration.bicep' = {
   name: 'reg'
   scope: resourceGroup
   params: {
-    keyVaultName: '${take(prefix, 21)}-kv'
-    location: location
-    tags: tags
-    principalId: principalId
-    appEndpoint: web.outputs.uri
+    clientAppName: '${prefix}-entra-client-app'
+    clientAppDisplayName: 'Simple Flask Server Client App'
+    webAppEndpoint: web.outputs.uri
+    webAppIdentityId: web.outputs.identityPrincipalId
+    issuer: issuer
+    serviceManagementReference: serviceManagementReference
   }
 }
+
 module appupdate 'appupdate.bicep' = {
   name: 'appupdate'
   scope: resourceGroup
   params: {
     appServiceName: web.outputs.name
-    authClientId: registration.outputs.clientAppId
-    authCertThumbprint: registration.outputs.certThumbprint
-    authIssuerUri: '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0'
+    clientId: registration.outputs.clientAppId
+    openIdIssuer: issuer
   }
 }
 

@@ -6,6 +6,7 @@ param tags object = {}
 param applicationInsightsName string = ''
 param appServicePlanId string
 param managedIdentity bool = true
+param userManagedIdentityId string = ''
 
 // Runtime Properties
 @allowed([
@@ -57,9 +58,10 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
     clientAffinityEnabled: clientAffinityEnabled
     httpsOnly: true
   }
-
-  identity: { type: managedIdentity ? 'SystemAssigned' : 'None' }
-
+  identity:{
+    type: 'UserAssigned'
+    userAssignedIdentities: { '${userManagedIdentityId}': {} }
+  }
   resource configAppSettings 'config' = {
     name: 'appsettings'
     properties: union(appSettings,
@@ -84,6 +86,5 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
 }
 
 
-output identityPrincipalId string = managedIdentity ? appService.identity.principalId : ''
 output name string = appService.name
 output uri string = 'https://${appService.properties.defaultHostName}'

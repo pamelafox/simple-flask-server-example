@@ -13,6 +13,9 @@
       },
       "useFreeSku": {
         "value": "${USE_FREE_SKU=false}"
+      },
+      "serviceManagementReference": {
+        "value": "${AZURE_SERVICE_MANAGEMENT_REFERENCE}"
       }
     }
   }
