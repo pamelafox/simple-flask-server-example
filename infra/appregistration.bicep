@@ -1,4 +1,4 @@
-provider 'microsoftGraph@1.0.0'
+provider microsoftGraph
 
 @description('Specifies the ID of the user-assigned managed identity.')
 param webAppIdentityId string
