@@ -1,3 +1,5 @@
+** Moved to https://github.com/Azure-Samples/simple-flask-server-appservice **
+
 This repository includes a very simple Python Flask web site, made for demonstration purposes only.
 
 ## Opening the project
