@@ -16,7 +16,7 @@ param issuer string
 param webAppEndpoint string
 
 
-resource clientApp 'Microsoft.Graph/applications@beta' = {
+resource clientApp 'Microsoft.Graph/applications@v1.0' = {
   uniqueName: clientAppName
   displayName: clientAppDisplayName
   signInAudience: 'AzureADMyOrg'
@@ -51,7 +51,7 @@ resource clientApp 'Microsoft.Graph/applications@beta' = {
     }
   ]
 
-  resource clientAppFic 'federatedIdentityCredentials@beta' = {
+  resource clientAppFic 'federatedIdentityCredentials@v1.0' = {
     name: '${clientApp.uniqueName}/msiAsFic'
     audiences: ['api://AzureADTokenExchange']
     issuer: issuer
@@ -61,7 +61,7 @@ resource clientApp 'Microsoft.Graph/applications@beta' = {
 
 
 
-resource clientSp 'Microsoft.Graph/servicePrincipals@beta' = {
+resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
   appId: clientApp.appId
 }
 
