@@ -28,13 +28,6 @@ resource clientApp 'Microsoft.Graph/applications@v1.0' = {
       ]
       implicitGrantSettings: {enableIdTokenIssuance: true}
   }
-  spa: {
-    redirectUris: [
-      'http://localhost:50505/redirect'
-      '${webAppEndpoint}/redirect'
-
-    ]
-  }
   requiredResourceAccess: [
     {
       resourceAppId: '00000003-0000-0000-c000-000000000000'
@@ -52,7 +45,7 @@ resource clientApp 'Microsoft.Graph/applications@v1.0' = {
   ]
 
   resource clientAppFic 'federatedIdentityCredentials@v1.0' = {
-    name: '${clientApp.uniqueName}/msiAsFic'
+    name: '${clientApp.uniqueName}/miAsFic'
     audiences: ['api://AzureADTokenExchange']
     issuer: issuer
     subject: webAppIdentityId
